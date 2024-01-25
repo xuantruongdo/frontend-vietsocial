@@ -1,0 +1,35 @@
+.sidebar {
+  padding-top: 75px;
+  width: 300px;
+  height: 100vh;
+  border-right: solid 1px #efefef;
+  position: fixed;
+  .sidebar__inner {
+    margin-left: 10px;
+    .item {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+      cursor: pointer;
+      span {
+        color: #585757;
+        font-weight: 500;
+        font-size: 18px;
+      }
+    }
+    :hover {
+      background-color: rgba(42, 65, 232, 0.07);
+      color: #2a41e8;
+      border-radius: 10px;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .sidebar{
+    padding-top: 0;
+    border-right: none;
+  }
+}

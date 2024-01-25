@@ -1,8 +1,13 @@
+import './Feed.scss'
+import Sidebar from "../../components/Sidebar/Sidebar";
+import Content from '../../components/Content/Content';
+
 const Feed = () => {
     return ( 
-        <>
-            Feed
-        </>
+        <div className='feed'>
+            <Sidebar />
+            <Content/>
+        </div>
      );
 }
  

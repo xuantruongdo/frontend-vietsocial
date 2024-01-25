@@ -1,0 +1,30 @@
+.content{
+    display: flex;
+    gap: 50px;
+    padding-top: 75px;
+    padding-left: 300px;
+    margin: 0 20px;
+    .feed__inner{
+        flex: 3;
+    }
+    .rightbar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+    }
+    
+}
+
+@media (max-width: 1024px) {
+    .content{
+        padding-left: 0;
+        background-color: #F9FAFB;
+        z-index: 10;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .rightbar{
+        display: none;
+    }
+  }
