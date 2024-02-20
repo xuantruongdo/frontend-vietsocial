@@ -12,6 +12,19 @@ body{
   background-color: #F9FAFB;
 }
 
+a{
+  text-decoration: none;
+  color: unset;
+}
+.btn{
+  width: 100%;
+  background-color: #F0F2F5;
+  color: #666;
+}
+
+.container{
+  margin: 0 5%;
+}
 
 .icon {
   width: 40px;

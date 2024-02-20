@@ -14,7 +14,7 @@ import CommentPreview from "./CommentPreview/CommentPreview";
 import PostAction from "./PostAction/PostAction";
 import CommentItem from "./CommentItem/CommentItem";
 import InputComment from "./InputComment/InputComment";
-import UserInfoComment from "./UserInfoComment/UserInfoComment";
+import UserPostHeading from "./UserPostHeading/UserPostHeading";
 
 let itemsDropdown = [
   {
@@ -47,13 +47,13 @@ let itemsDropdown = [
 ];
 
 const PostCard = () => {
-  const [editVisible, setEditVisible] = useState<boolean | undefined>(
-    undefined
-  );
+  // const [editVisible, setEditVisible] = useState<boolean | undefined>(
+  //   undefined
+  // );
 
-  const handleEditVisibleChange = (visibility: any) => {
-    setEditVisible(visibility);
-  };
+  // const handleEditVisibleChange = (visibility: any) => {
+  //   setEditVisible(visibility);
+  // };
 
   const { modal, showModal } = useModal({
     content: <CommentPreview />,
@@ -62,13 +62,11 @@ const PostCard = () => {
   return (
     <Card className="post__single">
       <div className="post__heading">
-        <UserInfoComment/>
+        <UserPostHeading/>
 
         <DropdownComponent
           items={itemsDropdown}
           icon={<IoIosMore />}
-          visible={editVisible}
-          onVisibleChange={handleEditVisibleChange}
         />
       </div>
 

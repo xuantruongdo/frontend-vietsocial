@@ -1,0 +1,15 @@
+.sidebar__chat{
+    position: fixed;
+    width: 80px;
+    border-right: solid 1px #efefef;
+    text-align: center;
+    padding: 20px 0;
+    .item{
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        &:hover{
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+    }
+}

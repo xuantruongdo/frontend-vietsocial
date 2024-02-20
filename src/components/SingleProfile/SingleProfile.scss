@@ -1,0 +1,110 @@
+.single__profile {
+  padding-top: 75px;
+  padding-left: 300px;
+  margin: 0 20px;
+  width: 100%;
+  .cover {
+    width: 100%;
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+    height: 250px;
+    img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      -o-object-fit: cover;
+      object-fit: cover;
+    }
+    .edit__cover {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      color: white;
+      // background-color: #2c3440;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .avatar {
+    display: flex;
+    justify-content: center;
+    transform: translateY(-100px);
+
+    .change__avatar--icon {
+      position: absolute;
+      left: 49%;
+      bottom: 10px;
+      color: white;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      -webkit-box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.3);
+      box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.3);
+      border: 4px solid #fff;
+      object-fit: cover;
+      position: relative;
+      &:hover {
+        .change__avatar--icon {
+          display: block;
+        }
+      }
+    }
+
+    .user_status {
+      position: absolute;
+      left: 53%;
+      bottom: 10px;
+      content: "";
+      height: 20px;
+      width: 20px;
+      background-color: #c0c0c0;
+      display: block;
+      border: 2.5px solid #fff;
+      border-radius: 50%;
+      visibility: hidden;
+    }
+
+    .status_online {
+      background-color: #38b653;
+      visibility: visible;
+    }
+  }
+
+  .info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-80px);
+    flex-direction: column;
+    h1{
+        color: #464646;
+        text-transform: capitalize;
+        font-weight: 600;
+        font-size: 26px;
+        margin-bottom: 0;  
+    }
+    p{
+        margin-bottom: 0px;
+        color: #9c9c9c;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .single__profile {
+    padding-left: 0;
+    background-color: #f9fafb;
+    z-index: 10;
+    margin: 0 ;
+  }
+}

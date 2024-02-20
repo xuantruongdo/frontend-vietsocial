@@ -7,7 +7,7 @@ import {
 import PostAction from "../PostAction/PostAction";
 import InputComment from "../InputComment/InputComment";
 import CommentItem from "../CommentItem/CommentItem";
-import UserInfoComment from "../UserInfoComment/UserInfoComment";
+import UserPostHeading from "../UserPostHeading/UserPostHeading";
 
 const CommentPreview = () => {
   return (
@@ -19,17 +19,13 @@ const CommentPreview = () => {
         />
       </Col>
       <Col span={24}>
-        <UserInfoComment />
+        <UserPostHeading />
 
         <PostAction />
 
         <InputComment />
 
         <div className="comment_list">
-          <CommentItem />
-          <CommentItem />
-          <CommentItem />
-          <CommentItem />
           <CommentItem />
           <CommentItem />
           <CommentItem />

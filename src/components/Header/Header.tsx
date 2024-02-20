@@ -1,6 +1,6 @@
 import "./Header.scss";
 import logo from "../../assets/images/logo.png";
-import { Image, Switch } from "antd";
+import { Avatar, Flex, Image, Space, Switch } from "antd";
 import {
   BellOutlined,
   CheckSquareOutlined,
@@ -12,7 +12,6 @@ import {
   SearchOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import { useState } from "react";
 import type { MenuProps } from "antd";
 import { FaRegMoon } from "react-icons/fa";
 import DropdownComponent from "../Dropdown/Dropdown";
@@ -25,25 +24,29 @@ const notificationItems: MenuProps["items"] = [
   {
     key: "1",
     label: (
-      <div className="drop_headline">
-        <h4>Notifications </h4>
-        <div className="btn_action">
-          <a href="#">
-            <SettingOutlined />
-          </a>
-          <a href="#">
-            <CheckSquareOutlined />
-          </a>
-        </div>
-      </div>
+      <Flex
+        align="center"
+        justify="space-between"
+        style={{ padding: "15px 3px 10px", color: "#666" }}
+      >
+        <h4 style={{ fontSize: 20 }}>Notifications </h4>
+        <Space>
+          <SettingOutlined style={{ fontSize: 20 }} />
+          <CheckSquareOutlined style={{ fontSize: 20 }} />
+        </Space>
+      </Flex>
     ),
   },
   {
     key: "2",
     label: (
-      <div className="notification__item">
+      <Flex align="center" gap={10} className="notification__item">
         <div className="drop_avatar">
-          <img src="https://image.vtc.vn/resize/th/upload/2020/12/28/ronaldo-06545791.jpeg" />
+          <Avatar
+            size={50}
+            src="https://image.vtc.vn/resize/th/upload/2020/12/28/ronaldo-06545791.jpeg"
+            alt="avatar"
+          />
         </div>
         <span className="drop_icon">
           <LikeOutlined />
@@ -54,64 +57,7 @@ const notificationItems: MenuProps["items"] = [
           </p>
           <time> 2 hours ago </time>
         </div>
-      </div>
-    ),
-  },
-  {
-    key: "3",
-    label: (
-      <div className="notification__item">
-        <div className="drop_avatar">
-          <img src="https://image.vtc.vn/resize/th/upload/2020/12/28/ronaldo-06545791.jpeg" />
-        </div>
-        <span className="drop_icon">
-          <LikeOutlined />
-        </span>
-        <div className="drop_text">
-          <p>
-            <strong>Adrian Mohani</strong> Like Your Comment On Video
-          </p>
-          <time> 2 hours ago </time>
-        </div>
-      </div>
-    ),
-  },
-  {
-    key: "4",
-    label: (
-      <div className="notification__item">
-        <div className="drop_avatar">
-          <img src="https://image.vtc.vn/resize/th/upload/2020/12/28/ronaldo-06545791.jpeg" />
-        </div>
-        <span className="drop_icon">
-          <LikeOutlined />
-        </span>
-        <div className="drop_text">
-          <p>
-            <strong>Adrian Mohani</strong> Like Your Comment On Video
-          </p>
-          <time> 2 hours ago </time>
-        </div>
-      </div>
-    ),
-  },
-  {
-    key: "5",
-    label: (
-      <div className="notification__item">
-        <div className="drop_avatar">
-          <img src="https://image.vtc.vn/resize/th/upload/2020/12/28/ronaldo-06545791.jpeg" />
-        </div>
-        <span className="drop_icon">
-          <LikeOutlined />
-        </span>
-        <div className="drop_text">
-          <p>
-            <strong>Adrian Mohani</strong> Like Your Comment On Video
-          </p>
-          <time> 2 hours ago </time>
-        </div>
-      </div>
+      </Flex>
     ),
   },
 ];
@@ -120,17 +66,17 @@ const messageItems: MenuProps["items"] = [
   {
     key: "1",
     label: (
-      <div className="drop_headline">
-        <h4>Messages </h4>
-        <div className="btn_action">
-          <a href="#">
-            <SettingOutlined />
-          </a>
-          <a href="#">
-            <CheckSquareOutlined />
-          </a>
-        </div>
-      </div>
+      <Flex
+        align="center"
+        justify="space-between"
+        style={{ padding: "15px 3px 10px", color: "#666" }}
+      >
+        <h4 style={{ fontSize: 20 }}>Messages </h4>
+        <Space>
+          <SettingOutlined style={{ fontSize: 20 }} />
+          <CheckSquareOutlined style={{ fontSize: 20 }} />
+        </Space>
+      </Flex>
     ),
   },
   {
@@ -144,49 +90,34 @@ const messageItems: MenuProps["items"] = [
   {
     key: "3",
     label: (
-      <div className="message__item">
-        <div className="drop_avatar">
-          <img src="https://image.vtc.vn/resize/th/upload/2020/12/28/ronaldo-06545791.jpeg" />
-        </div>
-        <div className="message_text">
-          <div className="message_heading">
-            <strong> Adrian Mohani </strong> <time> 6:43 PM</time>
-          </div>
+      <Flex align="center" justify="space-between">
+        <Space>
+          <Avatar
+            size={44}
+            src="https://image.vtc.vn/resize/th/upload/2020/12/28/ronaldo-06545791.jpeg"
+            alt="avatar"
+          />
+          <div>
+          <h4>Adrian Mohani</h4>
           <p>Thanks for The Answer sit amet</p>
-        </div>
-      </div>
+          </div>
+        </Space>
+        <time> 6:43 PM</time>
+      </Flex>
     ),
   },
 ];
 
 const Header = () => {
-  const [notificationVisible, setNotificationVisible] = useState<
-    boolean | undefined
-  >(undefined);
-
-  const [messageVisible, setMessageVisible] = useState<boolean | undefined>(
-    undefined
-  );
-
-  const [accountVisible, setAccountVisible] = useState<boolean | undefined>(
-    undefined
-  );
-
   const { drawer, showDrawer } = useDrawer({
+    title: (
+      <Flex align="center" gap={10}>
+        <img src={logo} style={{ width: "50px" }} />
+        <p>VIET SOCIAL</p>
+      </Flex>
+    ),
     content: <Sidebar />,
   });
-
-  const handleNotificaionVisibleChange = (visibility: any) => {
-    setNotificationVisible(visibility);
-  };
-
-  const handleMessageVisibleChange = (visibility: any) => {
-    setMessageVisible(visibility);
-  };
-
-  const handleAccountVisibleChange = (visibility: any) => {
-    setAccountVisible(visibility);
-  };
 
   const onChange = (checked: boolean) => {
     console.log(`switch to ${checked}`);
@@ -277,27 +208,13 @@ const Header = () => {
           badge={5}
           items={notificationItems}
           icon={<BellOutlined />}
-          visible={notificationVisible}
-          onVisibleChange={handleNotificaionVisibleChange}
         />
         <DropdownComponent
           badge={5}
           items={messageItems}
           icon={<MessageOutlined />}
-          visible={messageVisible}
-          onVisibleChange={handleMessageVisibleChange}
         />
-        <DropdownAccount
-          items={accountItems}
-          visible={accountVisible}
-          onVisibleChange={handleAccountVisibleChange}
-        />
-      </div>
-
-      <div className="search__icon">
-        <div className="icon">
-          <SearchOutlined />
-        </div>
+        <DropdownAccount items={accountItems} />
       </div>
 
       {drawer}

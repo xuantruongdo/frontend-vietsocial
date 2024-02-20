@@ -1,33 +1,39 @@
-import { Avatar, Col, Row, Space, Typography } from "antd";
+import {
+  Avatar,
+  Flex,
+  Space,
+  Tag,
+  Typography,
+} from "antd";
 import { FaHeart } from "react-icons/fa";
 
 const CommentItem = () => {
   return (
-    <Row justify="space-between" align={"middle"} style={{ marginTop: 20 }}>
-      <Col xs={24} sm={18}>
-        <Space>
+    <Flex align="center" justify="space-between" gap={20}>
+      <Flex align="start" gap={10}>
+        <div>
           <Avatar
-            size={40}
+            size={38}
             src="https://media.bongda.com.vn/files/duc.nguyen/2023/12/29/screenshot-2023-12-29-103817-1201.png"
           />
-          <Space direction="vertical" style={{rowGap: 0}}>
-            <h4>Truong Do</h4>
-          <Typography style={{ textAlign: "justify" }}>
-            this is a comment this is a comment
+        </div>
+        <Space direction="vertical" style={{ rowGap: 0 }}>
+          <h4>TruongDo</h4>
+
+          <Typography>
+            this is a comment this is a commentthis is a commentthis is a
+            comment this is a commentthis is a comment this is a comment this is
+            a commentthis is a comment
           </Typography>
-        </Space>
-        </Space>
-      </Col>
-      <Col xs={0} sm={6}>
-        <Space>
-          <Space direction="vertical">
+          <Space>
             <FaHeart color="red" />
             <p style={{ fontSize: 10 }}>123</p>
           </Space>
-          <span>a day ago</span>
         </Space>
-      </Col>
-    </Row>
+      </Flex>
+
+      <Tag color="purple">a day ago</Tag>
+    </Flex>
   );
 };
 

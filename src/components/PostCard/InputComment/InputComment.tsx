@@ -1,19 +1,15 @@
-import { Button, Col, Input, Row } from "antd";
+import { Button, Col, Flex, Input, Row } from "antd";
 import { IoSend } from "react-icons/io5";
 
 const InputComment = () => {
   return (
     <div className="post__comments">
-      <Row gutter={[16, 16]} align="middle">
-        <Col span={20}>
-          <Input placeholder="Add your comment..." />
-        </Col>
-        <Col span={4}>
-          <Button type="primary">
-            <IoSend />
-          </Button>
-        </Col>
-      </Row>
+      <Flex align="center" justify="space-between" gap={20}>
+        <Input placeholder="Add your comment..." />
+        <Button type="primary">
+          <IoSend />
+        </Button>
+      </Flex>
     </div>
   );
 };

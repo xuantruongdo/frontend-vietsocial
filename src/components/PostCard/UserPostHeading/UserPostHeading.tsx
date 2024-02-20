@@ -1,10 +1,10 @@
 import { Avatar, Space } from "antd";
 
-const UserInfoComment = () => {
+const UserPostHeading = () => {
   return (
     <Space>
       <Avatar
-        size={40}
+        size={38}
         src="https://media.bongda.com.vn/files/duc.nguyen/2023/12/29/screenshot-2023-12-29-103817-1201.png"
       />
       <Space direction="vertical" style={{ rowGap: 0 }}>
@@ -15,4 +15,4 @@ const UserInfoComment = () => {
   );
 };
 
-export default UserInfoComment;
+export default UserPostHeading;

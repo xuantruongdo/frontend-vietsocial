@@ -11,9 +11,6 @@ header {
   .mobile{
     display: none;
   }
-  .search__icon{
-    display: none;
-  }
   .logo {
     margin: 8px 0;
     cursor: pointer;
@@ -66,70 +63,10 @@ header {
   }
 }
 
-.drop_headline {
-  padding: 15px 3px 10px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  h4 {
-    display: inline-block;
-    font-size: 19px;
-    font-weight: 600;
-    color: #666 !important;
-    margin-left: 2px;
-  }
-  .btn_action {
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    margin-right: -5px;
-    a {
-      position: relative;
-      border-radius: 50px;
-      -webkit-transition: 0.25s;
-      transition: 0.25s;
-      font-size: 19px;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
-      align-items: center;
-      -webkit-box-pack: center;
-      -ms-flex-pack: center;
-      justify-content: center;
-      margin-left: 5px;
-      height: 31px;
-      width: 31px;
-      color: #666;
-    }
-  }
-}
 
 .notification__item {
-  display: flex;
-  gap: 20px;
   .drop_avatar {
-    flex-shrink: 0;
-    border-radius: 50%;
-    overflow: visible;
-    -ms-flex-item-align: start;
-    align-self: flex-start;
     position: relative;
-    overflow: visible;
-    flex-shrink: 0;
-    img {
-      height: 45px;
-      width: 45px;
-      border-radius: 50%;
-    }
   }
   .drop_icon {
     position: absolute;
@@ -137,16 +74,10 @@ header {
     bottom: 8px;
     padding: 0;
     font-size: 16px;
-    height: 27px;
-    width: 27px;
-    display: -webkit-box;
-    display: -ms-flexbox;
+    height: 25px;
+    width: 25px;
     display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center;
     background-color: #f2f2f2;
     background: linear-gradient(80deg, #78a6fc, #3576ef 100%) !important;
@@ -154,19 +85,13 @@ header {
     border-radius: 100%;
   }
   .drop_text {
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
     flex: 1;
     line-height: 23px;
     font-size: 13.5px;
-    padding-left: 16px;
     p {
       font-size: 13.5px;
       line-height: 24px;
       overflow: hidden;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
     }
     time {
       font-size: 12.7px;
@@ -192,41 +117,6 @@ header {
   }
 }
 
-.message__item{
-  display: flex;
-  gap: 20px;
-  color: #666 !important;
-  .drop_avatar {
-    flex-shrink: 0;
-    border-radius: 50%;
-    overflow: visible;
-    -ms-flex-item-align: start;
-    align-self: flex-start;
-    position: relative;
-    overflow: visible;
-    flex-shrink: 0;
-    img {
-      height: 45px;
-      width: 45px;
-      border-radius: 50%;
-    }
-  }
-  .message_text {
-    width: 100%;
-    .message_heading{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    p{
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-  }
-}
-
 .account__drop{
   .account_heading{
     display: flex;
@@ -247,18 +137,19 @@ header {
 }
 
 
-@media (max-width: 1024px) {
+@media (max-width: 991px) {
   header {
     justify-content: space-between;
     padding: 5px 0;
     .mobile{
       display: block;
     }
-    .search__icon{
-      display: block;
+
+    .logo{
+      display: none;
     }
     .header__search {
-      display: none;
+      padding-right: 50px;
     }
     .header__widgets {
       position: fixed;
@@ -269,10 +160,23 @@ header {
       padding: 0 50px;
       background: white;
       border-top: 1px solid #e2dfdf;
-
     }
-    .mobile, .search__icon{
-      padding: 0 50px;
+    .mobile{
+      padding-left: 50px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    .mobile{
+      padding-left: 20px;
+    }
+    .header__search {
+      padding-right: 20px;
+      input{
+        min-width: unset;
+      }
     }
   }
 }

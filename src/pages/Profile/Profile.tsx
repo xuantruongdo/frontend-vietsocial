@@ -1,3 +1,4 @@
+import { Flex } from 'antd';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import SingleProfile from '../../components/SingleProfile/SingleProfile';
 import './Profile.scss'
@@ -5,10 +6,10 @@ import './Profile.scss'
 const Profile = () => {
 
     return ( 
-        <div className='profile'>
+        <Flex>
             <Sidebar />
             <SingleProfile/>
-        </div>
+        </Flex>
      );
 }
  

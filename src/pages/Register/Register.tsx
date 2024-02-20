@@ -1,15 +1,16 @@
-import "./Login.scss";
+import "../Login/Login.scss";
 import { Button, Card, Col, Divider, Form, Input, Row } from "antd";
 import logo from "../../assets/images/logo.png";
 import { Link } from "react-router-dom";
 
 type FieldType = {
-  username?: string;
+  fullname?: string;
+  email?: string;
   password?: string;
-  remember?: string;
+  confirm_password?: string;
 };
 
-const Login = () => {
+const Register = () => {
   return (
     <div className="login__wrapper">
       <Row gutter={[16, 16]} className="login">
@@ -28,9 +29,17 @@ const Login = () => {
               // style={{ margin: "0 50px", textAlign: "center" }}
             >
               <Form.Item<FieldType>
-                name="username"
+                name="fullname"
                 rules={[
-                  { required: true, message: "Please input your username!" },
+                  { required: true, message: "Please input your fullname!" },
+                ]}
+              >
+                <Input style={{ padding: 10 }} placeholder="Fullname" />
+              </Form.Item>
+              <Form.Item<FieldType>
+                name="email"
+                rules={[
+                  { required: true, message: "Please input your email!" },
                 ]}
               >
                 <Input style={{ padding: 10 }} placeholder="Email" />
@@ -40,6 +49,21 @@ const Login = () => {
                 name="password"
                 rules={[
                   { required: true, message: "Please input your password!" },
+                ]}
+              >
+                <Input.Password
+                  style={{ padding: 10 }}
+                  placeholder="Confim password"
+                />
+              </Form.Item>
+
+              <Form.Item<FieldType>
+                name="confirm_password"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your confirm password!",
+                  },
                 ]}
               >
                 <Input.Password
@@ -54,19 +78,15 @@ const Login = () => {
                   htmlType="submit"
                   style={{ width: "100%" }}
                 >
-                  Login
+                  Sign up
                 </Button>
               </Form.Item>
-
-              <div className="center__wrapper">
-                <Link to="#">Forgot password ?</Link>
-              </div>
 
               <Divider />
 
               <div className="center__wrapper">
-                <Link to="/register">
-                  <Button className="sub__button">Create New Account</Button>
+                <Link to="/login">
+                  <Button className="sub__button">Login with account</Button>
                 </Link>
               </div>
             </Form>
@@ -77,4 +97,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

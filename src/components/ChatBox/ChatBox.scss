@@ -1,0 +1,47 @@
+.chatbox {
+  border: solid 1px rgba(0, 0, 0, 0.05);
+  height: calc(100vh - 65px);
+  position: relative;
+
+  .heading {
+    height: 80px;
+    padding: 0 22px;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.05);
+    color: #333;
+  }
+  .chatbox__content {
+    height: 88%;
+    overflow-y: scroll;
+    margin: 10px;
+    .text {
+      background-color: #f4f4f4;
+      border-radius: 6px;
+      padding: 12px 18px;
+      max-width: 70%;
+    }
+    .send__wrapper {
+      position: absolute;
+      width: 95%;
+      bottom: 30px;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .chatbox {
+    .chatbox__content {
+      height: 85%;
+      .send__wrapper {
+        bottom: 70px;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .chatbox {
+    .chatbox__content {
+      height: 80%;
+    }
+  }
+}

@@ -2,7 +2,7 @@ import { Drawer } from "antd";
 import { useState } from "react";
 
 interface IProps {
-  title?: string;
+  title?: any;
   content: any;
 }
 
