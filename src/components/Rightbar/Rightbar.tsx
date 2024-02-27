@@ -1,22 +1,29 @@
 import { Card, Space, Tabs } from "antd";
 import "./Rightbar.scss";
 import GiftIcon from "../../assets/images/gift-icon.png";
-import OnlineUser from "../OnlineUser/OnlineUser";
+import OnlineUser from "./OnlineUser/OnlineUser";
+import ChatGroup from "./ChatGroup/ChatGroup";
 
-const items = [
+
+
+interface IProps {
+  onlineUsers: IUser[];
+}
+const Rightbar = (props: IProps) => {
+  const { onlineUsers } = props;
+  const items = [
     {
-        label: "Online",
-        key: "1",
-        children: <OnlineUser />,
+      label: "Online",
+      key: "1",
+      children: <OnlineUser onlineUsers={onlineUsers} />,
     },
     {
-        label: "Chat Groups",
-        key: "3",
-        children: "Tab 3",
-      },
+      label: "Chat Groups",
+      key: "2",
+      children: <ChatGroup />,
+    },
+  ];
 
-]
-const Rightbar = () => {
   return (
     <div className="rightbar">
       <Card title="Birthdays">
@@ -30,10 +37,7 @@ const Rightbar = () => {
       </Card>
 
       <div className="contact">
-        <Tabs
-          defaultActiveKey="1"
-          items={items}
-        />
+        <Tabs defaultActiveKey="1" items={items} />
       </div>
     </div>
   );

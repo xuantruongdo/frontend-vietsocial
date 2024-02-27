@@ -7,8 +7,49 @@ import Login from "./pages/Login/Login";
 import Chat from "./pages/Chat/Chat";
 import Group from "./pages/Group/Group";
 import Register from "./pages/Register/Register";
+import Forget from "./pages/Forget/Forget";
+import { useDispatch } from "react-redux";
+import { callFetchCurrentAccount, callFetchOnlineUsers } from "./api/api";
+import { useEffect, useState } from "react";
+import { doGetAccountAction } from "./redux/account/accountSlice";
+import Setting from "./pages/Setting/Setting";
+import useSocket from "./hooks/useSocket";
 
 function App() {
+  const socket = useSocket();
+  const [onlineIds, setOnlineIds] = useState<string[]>([]);
+  const [onlineUsers, setOnlineUsers] = useState<IUser[]>([]);
+
+  useEffect(() => {
+    const handleOnlineUsers = (usersArray: any) => {
+      setOnlineIds(usersArray);
+    };
+
+    socket?.on("onlineUsers", handleOnlineUsers);
+
+    // Wait for the socket connection to be established
+    socket?.on("connect", () => {
+      // Emit the "getOnlineUsers" event when the component mounts
+      socket?.emit("getOnlineUsers");
+    });
+
+    return () => {
+      socket?.off("onlineUsers", handleOnlineUsers);
+    };
+  }, [socket?.id]);
+
+  const fetchOnlineUsers = async () => {
+    let data = { ids: onlineIds };
+    const res = await callFetchOnlineUsers(data);
+    if (res && res.data) {
+      setOnlineUsers(res.data);
+    }
+  };
+
+  useEffect(() => {
+    fetchOnlineUsers();
+  }, [onlineIds]);
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -16,31 +57,60 @@ function App() {
       errorElement: <NotFound />,
       children: [
         {
-          index: true, element: <Feed/>
+          index: true,
+          element: <Feed onlineUsers={onlineUsers} />,
         },
         {
-          path: '/profile',
-          element: <Profile/>
+          path: "/profile/:slug",
+          element: <Profile onlineUsers={onlineUsers} />,
         },
         {
-          path: '/chat',
-          element: <Chat/>
+          path: "/chat",
+          element: <Chat />,
         },
         {
-          path: '/group',
-          element: <Group/>
-        }
-      ]
+          path: "/group",
+          element: <Group />,
+        },
+        {
+          path: "/setting/:slug",
+          element: <Setting />,
+        },
+      ],
     },
     {
-      path: '/login',
-      element: <Login/>
+      path: "/login",
+      element: <Login />,
     },
     {
-      path: '/register',
-      element: <Register/>
+      path: "/register",
+      element: <Register />,
+    },
+    {
+      path: "/forget",
+      element: <Forget />,
+    },
+  ]);
+
+  const dispatch = useDispatch();
+
+  const fetchCurrentAccount = async () => {
+    if (
+      window.location.pathname === "/login" ||
+      window.location.pathname === "/register"
+      // || window.location.pathname === '/'
+    )
+      return;
+    const res = await callFetchCurrentAccount();
+    if (res && res.data) {
+      dispatch(doGetAccountAction(res.data));
     }
-  ])
+  };
+
+  useEffect(() => {
+    fetchCurrentAccount();
+  }, []);
+
   return (
     <>
       <RouterProvider router={router} />

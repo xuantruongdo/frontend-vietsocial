@@ -6,33 +6,33 @@ import {
   Typography,
 } from "antd";
 import { FaHeart } from "react-icons/fa";
+import { BASE_URL } from "../../../constants/constants";
+import moment from "moment";
 
-const CommentItem = () => {
+interface IProps{
+  comment: IComment;
+}
+const CommentItem = (props: IProps) => {
+  const { comment } = props;
   return (
-    <Flex align="center" justify="space-between" gap={20}>
+    <Flex align="center" justify="space-between" gap={20} style={{padding: "6px 0"}}>
       <Flex align="start" gap={10}>
         <div>
           <Avatar
             size={38}
-            src="https://media.bongda.com.vn/files/duc.nguyen/2023/12/29/screenshot-2023-12-29-103817-1201.png"
+            src={`${BASE_URL}/images/${comment?.user.avatar}`}
           />
         </div>
         <Space direction="vertical" style={{ rowGap: 0 }}>
-          <h4>TruongDo</h4>
+          <h4>{comment?.user.fullname}</h4>
 
           <Typography>
-            this is a comment this is a commentthis is a commentthis is a
-            comment this is a commentthis is a comment this is a comment this is
-            a commentthis is a comment
+            {comment?.content}
           </Typography>
-          <Space>
-            <FaHeart color="red" />
-            <p style={{ fontSize: 10 }}>123</p>
-          </Space>
         </Space>
       </Flex>
 
-      <Tag color="purple">a day ago</Tag>
+      <Tag color="purple">{moment(comment?.createdAt).fromNow()}</Tag>
     </Flex>
   );
 };

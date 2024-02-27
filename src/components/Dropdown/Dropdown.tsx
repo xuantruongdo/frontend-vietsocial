@@ -13,7 +13,7 @@ const DropdownComponent = (props: IProps) => {
     <Dropdown
       menu={{ items }}
       trigger={["click"]}
-      overlayStyle={{ width: badge ? 400 : 200 }}
+      overlayStyle={{ width: 400 }}
       placement="bottomRight"
     >
       <Badge count={badge}>

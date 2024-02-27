@@ -1,7 +1,19 @@
 import "../Login/Login.scss";
-import { Button, Card, Col, Divider, Form, Input, Row } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Divider,
+  Form,
+  Input,
+  Row,
+  message,
+  notification,
+} from "antd";
 import logo from "../../assets/images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { callRegister } from "../../api/api";
+import { useState } from "react";
 
 type FieldType = {
   fullname?: string;
@@ -11,6 +23,40 @@ type FieldType = {
 };
 
 const Register = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const onFinish = async (values: any) => {
+    const { fullname, email, password, confirm_password } = values;
+    if (password !== confirm_password) {
+      return notification.error({
+        message: "An error occurred",
+        description: "Password incorrect! Please try again",
+        duration: 5,
+      });
+    }
+
+    setLoading(true);
+
+    const res = await callRegister({ fullname, email, password });
+
+    setLoading(false);
+
+    if (res && res.data) {
+      message.success("Account registration successful");
+      navigate("/login");
+    } else {
+      notification.error({
+        message: "An error occurred",
+        description:
+          res.message && Array.isArray(res.message)
+            ? res.message[0]
+            : res.message,
+        duration: 5,
+      });
+    }
+  };
+
   return (
     <div className="login__wrapper">
       <Row gutter={[16, 16]} className="login">
@@ -24,9 +70,8 @@ const Register = () => {
             <Form
               name="basic"
               initialValues={{ remember: true }}
-              // onFinish={onFinish}
+              onFinish={onFinish}
               autoComplete="off"
-              // style={{ margin: "0 50px", textAlign: "center" }}
             >
               <Form.Item<FieldType>
                 name="fullname"
@@ -76,6 +121,7 @@ const Register = () => {
                 <Button
                   type="primary"
                   htmlType="submit"
+                  loading={loading}
                   style={{ width: "100%" }}
                 >
                   Sign up

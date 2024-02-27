@@ -1,20 +1,46 @@
-import { Col, Row, Space } from "antd";
+import { Col, Empty, Row, Space } from "antd";
 import PostCreation from "../../PostCreation/PostCreation";
 import PostList from "../../PostList/PostList";
 import About from "./About/About";
-import FriendTimeline from "./FriendTimeline/FriendTimeline";
+import { useSelector } from "react-redux";
+import { callFetchPostsWithAuthor } from "../../../api/api";
+import { useEffect, useState } from "react";
 
-const Timeline = () => {
+interface IProps {
+  singleUser: IUser;
+}
+const Timeline = (props: IProps) => {
+  const { singleUser } = props;
+  const currentUser = useSelector((state: any) => state.account.user);
+  const [posts, setPosts] = useState<IPost[]>([]);
+
+  const fetchPostsWithAuthor = async () => {
+    if (!singleUser?._id) return;
+    const res = await callFetchPostsWithAuthor(singleUser?._id);
+    if (res && res.data) {
+      setPosts(res.data);
+    }
+  };
+
+  useEffect(() => {
+    fetchPostsWithAuthor();
+  }, [singleUser]);
+
   return (
     <Row gutter={[16, 16]}>
       <Col xs={24} md={16}>
-        <PostCreation />
-        <PostList />
+        {currentUser?._id === singleUser?._id && (
+          <PostCreation fetchData={fetchPostsWithAuthor} />
+        )}
+        {posts.length > 0 ? (
+          <PostList posts={posts} fetchData={fetchPostsWithAuthor} />
+        ) : (
+          <Empty />
+        )}
       </Col>
       <Col xs={0} md={8}>
         <Space direction="vertical">
-          <About />
-          <FriendTimeline />
+          <About singleUser={singleUser} />
         </Space>
       </Col>
     </Row>

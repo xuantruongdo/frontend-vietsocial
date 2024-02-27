@@ -1,24 +1,19 @@
-.chat__list{
-   border: solid 1px rgba(0, 0, 0, 0.05);
-   .heading{
+.chat__list {
+  border: solid 1px rgba(0, 0, 0, 0.05);
+  .heading {
     height: 80px;
     padding: 0 22px;
     border-bottom: solid 1px rgba(0, 0, 0, 0.05);
     color: #333;
-   }
-   .list{
+  }
+  .list {
     height: calc(100vh - 148px);
     overflow: hidden;
     overflow-y: scroll;
-    .item{
-        padding: 10px 20px;
-        transition: all 0.2s;
-        cursor: pointer;
-        &:hover{
-            background-color: #333;
-            color: white;
-        }
+    .item {
+      padding: 10px 20px;
+      transition: all 0.2s;
+      cursor: pointer;
     }
-
-   }
+  }
 }

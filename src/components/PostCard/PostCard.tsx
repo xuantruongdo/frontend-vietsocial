@@ -1,99 +1,104 @@
-import {
-  Card,
-  Divider,
-  Image,
-} from "antd";
+import { Card, Image, message, notification } from "antd";
 import "./PostCard.scss";
 import { IoIosMore } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import DropdownComponent from "../Dropdown/Dropdown";
-import { useState } from "react";
 import { MdCommentsDisabled, MdDelete } from "react-icons/md";
 import useModal from "../../hooks/useModal";
 import CommentPreview from "./CommentPreview/CommentPreview";
 import PostAction from "./PostAction/PostAction";
-import CommentItem from "./CommentItem/CommentItem";
-import InputComment from "./InputComment/InputComment";
 import UserPostHeading from "./UserPostHeading/UserPostHeading";
+import { BASE_URL } from "../../constants/constants";
+import { useSelector } from "react-redux";
+import { callDeletePost } from "../../api/api";
 
-let itemsDropdown = [
-  {
-    label: (
-      <label>
-        <p>Edit Post</p>
-      </label>
-    ),
-    key: "edit-post",
-    icon: <FaEdit />,
-  },
-  {
-    label: (
-      <label>
-        <p>Disable Comment</p>
-      </label>
-    ),
-    key: "disable-comment",
-    icon: <MdCommentsDisabled />,
-  },
-  {
-    label: (
-      <label>
-        <p style={{ color: "red" }}>Delete Post</p>
-      </label>
-    ),
-    key: "delete-post",
-    icon: <MdDelete style={{ color: "red" }} />,
-  },
-];
+interface IProps {
+  post: IPost;
+  fetchPosts: any;
+}
 
-const PostCard = () => {
-  // const [editVisible, setEditVisible] = useState<boolean | undefined>(
-  //   undefined
-  // );
+const PostCard = (props: IProps) => {
+  const { post, fetchPosts } = props;
 
-  // const handleEditVisibleChange = (visibility: any) => {
-  //   setEditVisible(visibility);
-  // };
+  const currentUser = useSelector((state: any) => state.account.user);
 
   const { modal, showModal } = useModal({
-    content: <CommentPreview />,
+    content: <CommentPreview post={post} />,
   });
+
+  const handleDeletePost = async () => {
+    const res = await callDeletePost(post?._id);
+    if (res && res.data) {
+      message.success("Post deleted successfully");
+      fetchPosts();
+    } else {
+      notification.error({
+        message: "An error occurred",
+        description:
+          res.message && Array.isArray(res.message)
+            ? res.message[0]
+            : res.message,
+        duration: 5,
+      });
+    }
+  };
+
+  const itemsDropdown = [
+    {
+      label: (
+        <label>
+          <p>Edit Post</p>
+        </label>
+      ),
+      key: "edit-post",
+      icon: <FaEdit />,
+    },
+    {
+      label: (
+        <label>
+          <p>Disable Comment</p>
+        </label>
+      ),
+      key: "disable-comment",
+      icon: <MdCommentsDisabled />,
+    },
+    {
+      label: (
+        <label onClick={handleDeletePost}>
+          <p style={{ color: "red" }}>Delete Post</p>
+        </label>
+      ),
+      key: "delete-post",
+      icon: <MdDelete style={{ color: "red" }} />,
+    },
+  ];
 
   return (
     <Card className="post__single">
       <div className="post__heading">
-        <UserPostHeading/>
+        <UserPostHeading post={post} />
 
-        <DropdownComponent
-          items={itemsDropdown}
-          icon={<IoIosMore />}
-        />
+        {currentUser?._id === post?.author._id && (
+          <DropdownComponent items={itemsDropdown} icon={<IoIosMore />} />
+        )}
       </div>
 
       <div className="image__wrapper">
-        <p className="caption">This is my caption</p>
-        <Image
-          src="https://media.bongda.com.vn/files/duc.nguyen/2023/12/29/screenshot-2023-12-29-103817-1201.png"
-          alt="image"
-          preview={false}
-          onClick={showModal}
-          style={{ cursor: "pointer", width: '100%' }}
-        />
+        <p className="caption">{post?.content}</p>
+        {post?.image && (
+          <div style={{ textAlign: "center" }}>
+            <Image
+              src={`${BASE_URL}/images/${post.image}`}
+              alt="image"
+              preview={false}
+              onClick={showModal}
+              style={{ cursor: "pointer", width: "100%" }}
+            />
+          </div>
+        )}
       </div>
 
-      <PostAction />
-
-      <Divider />
-
-      <div className="post__comments">
-        <CommentItem />
-
-        <p className="view__more" onClick={showModal}>
-          View 8 more comments
-        </p>
-
-        <InputComment />
-      </div>
+      <PostAction post={post} showModal={showModal} />
       {modal}
     </Card>
   );

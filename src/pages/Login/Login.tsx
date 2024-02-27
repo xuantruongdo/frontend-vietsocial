@@ -1,15 +1,57 @@
 import "./Login.scss";
-import { Button, Card, Col, Divider, Form, Input, Row } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Divider,
+  Form,
+  Input,
+  Row,
+  message,
+  notification,
+} from "antd";
 import logo from "../../assets/images/logo.png";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { callLogin } from "../../api/api";
+import { doLoginAction } from "../../redux/account/accountSlice";
 
 type FieldType = {
-  username?: string;
+  email?: string;
   password?: string;
   remember?: string;
 };
 
 const Login = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const dispatch = useDispatch();
+
+  const onFinish = async (values: FieldType) => {
+    const { email, password } = values;
+
+    setLoading(true);
+
+    const res = await callLogin({ username: email!, password: password! });
+
+    setLoading(false);
+
+    if (res && res?.data) {
+      localStorage.setItem("access_token", res.data.access_token);
+      dispatch(doLoginAction(res.data.user));
+      message.success("Logged in successfully");
+      window.location.href = "/";
+    } else {
+      notification.error({
+        message: "An error occurred",
+        description:
+          res.message && Array.isArray(res.message)
+            ? res.message[0]
+            : res.message,
+        duration: 5,
+      });
+    }
+  };
   return (
     <div className="login__wrapper">
       <Row gutter={[16, 16]} className="login">
@@ -23,17 +65,17 @@ const Login = () => {
             <Form
               name="basic"
               initialValues={{ remember: true }}
-              // onFinish={onFinish}
+              onFinish={onFinish}
               autoComplete="off"
               // style={{ margin: "0 50px", textAlign: "center" }}
             >
               <Form.Item<FieldType>
-                name="username"
+                name="email"
                 rules={[
-                  { required: true, message: "Please input your username!" },
+                  { required: true, message: "Please input your email!" },
                 ]}
               >
-                <Input style={{ padding: 10 }} placeholder="Email" />
+                <Input type="email" style={{ padding: 10 }} placeholder="Email" />
               </Form.Item>
 
               <Form.Item<FieldType>
@@ -52,6 +94,7 @@ const Login = () => {
                 <Button
                   type="primary"
                   htmlType="submit"
+                  loading={loading}
                   style={{ width: "100%" }}
                 >
                   Login
@@ -59,7 +102,7 @@ const Login = () => {
               </Form.Item>
 
               <div className="center__wrapper">
-                <Link to="#">Forgot password ?</Link>
+                <Link to="/forget">Forgot password ?</Link>
               </div>
 
               <Divider />

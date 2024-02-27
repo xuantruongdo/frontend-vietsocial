@@ -1,0 +1,22 @@
+.setting{
+    padding-top: 65px;
+    .setting__content{
+        margin-left: 80px;
+        .setting__list{
+            margin: 50px;
+            .heading{
+                margin-bottom: 30px;
+                display: flex;
+                align-items: center;
+                gap: 100px;
+            }
+            .setting__item{
+                display: flex;
+                padding: 10px;
+                p{
+                    width: 200px;
+                }
+            }
+        }
+    }
+}

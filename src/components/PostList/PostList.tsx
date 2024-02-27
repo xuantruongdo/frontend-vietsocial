@@ -1,12 +1,18 @@
 import PostCard from "../PostCard/PostCard";
 
-const PostList = () => {
+interface IProps{
+  posts: IPost[];
+  fetchPosts?: any;
+}
+const PostList = (props: IProps) => {
+  const { posts, fetchPosts } = props;
+
   return (
-    <div style={{ marginTop: "20px" }}>
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
+    <div>
+      {posts?.map((post) => (
+        <PostCard key={post._id} post={post} fetchPosts={fetchPosts} />
+      ))}
+      
     </div>
   );
 };

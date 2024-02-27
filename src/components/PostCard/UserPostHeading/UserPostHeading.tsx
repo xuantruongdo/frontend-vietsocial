@@ -1,15 +1,25 @@
 import { Avatar, Space } from "antd";
+import { BASE_URL } from "../../../constants/constants";
+import moment from "moment";
+import { Link } from "react-router-dom";
 
-const UserPostHeading = () => {
+interface IProps {
+  post: IPost;
+}
+
+const UserPostHeading = (props: IProps) => {
+  const { post } = props;
   return (
     <Space>
-      <Avatar
-        size={38}
-        src="https://media.bongda.com.vn/files/duc.nguyen/2023/12/29/screenshot-2023-12-29-103817-1201.png"
-      />
+      <Link to={`/profile/${post.author._id}`}>
+        <Avatar size={38} src={`${BASE_URL}/images/${post.author.avatar}`} />
+      </Link>
       <Space direction="vertical" style={{ rowGap: 0 }}>
-        <h4>Truong Do</h4>
-        <p>a day ago</p>
+        <Link to={`/profile/${post.author._id}`}>
+          <h4>{post.author.fullname}</h4>
+        </Link>
+
+        <p>{moment(post.createdAt).fromNow()}</p>
       </Space>
     </Space>
   );

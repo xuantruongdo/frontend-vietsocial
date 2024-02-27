@@ -4,9 +4,10 @@ import { useState } from "react";
 interface IProps {
   title?: any;
   content: any;
+  placement?: any;
 }
 
-const useDrawer = ({ title, content }: IProps) => {
+const useDrawer = ({ title, content, placement }: IProps) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
   const showDrawer = () => {
@@ -17,7 +18,7 @@ const useDrawer = ({ title, content }: IProps) => {
     setIsDrawerOpen(false);
   };
   const drawer = (
-    <Drawer title={title} onClose={handleCancel} open={isDrawerOpen} placement="left">
+    <Drawer title={title} onClose={handleCancel} open={isDrawerOpen} placement={placement}>
       {content}
     </Drawer>
   );

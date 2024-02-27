@@ -31,3 +31,12 @@
 }
 
 
+@media (max-width: 768px) {
+  .login__wrapper {
+    .login {
+      .left {
+        text-align: center;
+      }
+    }
+  }
+}

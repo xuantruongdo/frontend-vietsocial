@@ -1,16 +1,30 @@
-import { MdInsertPhoto } from "react-icons/md";
 import "./PostCreation.scss";
-import { Avatar, Card, Col, Flex, Row, Space } from "antd";
+import { MdInsertPhoto } from "react-icons/md";
+import { Avatar, Card, Flex, Space } from "antd";
 import { FaUserPlus } from "react-icons/fa";
 import { FaFaceLaugh } from "react-icons/fa6";
-import useModal from "../../hooks/useModal";
 import ModalCreationPost from "./ModalCreationPost";
+import { useSelector } from "react-redux";
+import { BASE_URL } from "../../constants/constants";
+import { useRef, useState } from "react";
 
-const PostCreation = () => {
-  const { modal, showModal } = useModal({
-    title: "Create a post",
-    content: <ModalCreationPost />,
-  });
+interface IProps {
+  fetchPosts?: any;
+}
+const PostCreation = (props: IProps) => {
+  const { fetchPosts } = props;
+  const inputRef = useRef<HTMLInputElement>(null);
+  const user = useSelector((state: any) => state.account.user);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="post__creation">
       <Card>
@@ -18,11 +32,16 @@ const PostCreation = () => {
           <div>
             <Avatar
               size={46}
-              src="https://image.vtc.vn/resize/th/upload/2020/12/28/ronaldo-06545791.jpeg"
-              alt=""
+              src={`${BASE_URL}/images/${user?.avatar}`}
+              alt="avatar"
             />
           </div>
-          <input type="text" placeholder="What's on your mind ?" />
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder="What's on your mind?"
+            onClick={showModal}
+          />
         </Flex>
 
         <Flex
@@ -53,7 +72,11 @@ const PostCreation = () => {
           </Space>
         </Flex>
       </Card>
-      {modal}
+      <ModalCreationPost
+        fetchPosts={fetchPosts}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+      />
     </div>
   );
 };

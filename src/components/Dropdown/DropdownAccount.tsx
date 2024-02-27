@@ -1,19 +1,21 @@
 import { Avatar, Dropdown } from "antd";
 import { MenuProps } from "antd/lib";
+import { BASE_URL } from "../../constants/constants";
 
 interface IProps {
   items: MenuProps["items"];
+  avatar: string;
 }
 
 const DropdownAccount = (props: IProps) => {
-  const { items } = props;
+  const { items, avatar } = props;
   return (
     <Dropdown
       menu={{ items }}
       trigger={["click"]}
       overlayStyle={{ width: 300 }}
     >
-      <Avatar size={46} src="https://image.vtc.vn/resize/th/upload/2020/12/28/ronaldo-06545791.jpeg" alt="avatar"/>
+      <Avatar size={46} src={`${BASE_URL}/images/${avatar}`} alt="avatar"/>
     </Dropdown>
   );
 };
