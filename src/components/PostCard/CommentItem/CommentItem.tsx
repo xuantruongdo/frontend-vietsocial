@@ -1,5 +1,4 @@
 import { Avatar, Flex, Space, Tag, Typography } from "antd";
-import { FaHeart } from "react-icons/fa";
 import { BASE_URL } from "../../../constants/constants";
 import moment from "moment";
 import { Link } from "react-router-dom";

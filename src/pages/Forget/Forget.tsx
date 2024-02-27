@@ -2,16 +2,13 @@ import "./Forget.scss";
 import {
   Button,
   Card,
-  Col,
-  Divider,
   Form,
   Input,
-  Row,
   message,
   notification,
 } from "antd";
 import logo from "../../assets/images/logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
   callFetchUserByEmail,
@@ -28,16 +25,12 @@ const Forget = () => {
   const [user, setUser] = useState<IUser>();
 
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(false);
 
   const [loadingConfirmCode, setLoadingConfirmCode] = useState<boolean>(false);
 
   const sendEmail = async () => {
-    setLoading(true);
 
     const res = await callSendEmail(user?.email!);
-
-    setLoading(false);
 
     if (res && res?.data) {
       message.success("Code sent successfully! Please check your email");

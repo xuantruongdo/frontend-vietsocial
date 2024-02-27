@@ -8,7 +8,6 @@ import {
   Image,
   Input,
   Space,
-  Switch,
   message,
   notification,
 } from "antd";
@@ -24,7 +23,7 @@ import {
   CheckSquareOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { FaRegMoon, FaRss } from "react-icons/fa";
+import { FaRss } from "react-icons/fa";
 import DropdownComponent from "../Dropdown/Dropdown";
 import DropdownAccount from "../Dropdown/DropdownAccount";
 import useDrawer from "../../hooks/useDrawer";
