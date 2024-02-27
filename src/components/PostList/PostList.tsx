@@ -1,6 +1,6 @@
 import PostCard from "../PostCard/PostCard";
 
-interface IProps{
+interface IProps {
   posts: IPost[];
   fetchPosts?: any;
 }
@@ -12,7 +12,6 @@ const PostList = (props: IProps) => {
       {posts?.map((post) => (
         <PostCard key={post._id} post={post} fetchPosts={fetchPosts} />
       ))}
-      
     </div>
   );
 };

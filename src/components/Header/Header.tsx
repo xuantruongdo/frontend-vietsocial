@@ -316,7 +316,7 @@ const Header = () => {
           <DropdownAccount items={accountItems} avatar={currentUser?.avatar} />
         </div>
       ) : (
-        <Flex gap={20}>
+        <Flex gap={20} className="login__action">
           <Link to="/login"> Login</Link>
           <Link to="/register">Register</Link>
         </Flex>

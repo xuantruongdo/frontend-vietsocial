@@ -3,7 +3,7 @@ import "./PostCard.scss";
 import { IoIosMore } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import DropdownComponent from "../Dropdown/Dropdown";
-import { MdCommentsDisabled, MdDelete } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import useModal from "../../hooks/useModal";
 import CommentPreview from "./CommentPreview/CommentPreview";
 import PostAction from "./PostAction/PostAction";
@@ -43,24 +43,17 @@ const PostCard = (props: IProps) => {
     }
   };
 
+  const handleUpdatePost = async () => {}
+
   const itemsDropdown = [
     {
       label: (
-        <label>
+        <label onClick={handleUpdatePost}>
           <p>Edit Post</p>
         </label>
       ),
       key: "edit-post",
       icon: <FaEdit />,
-    },
-    {
-      label: (
-        <label>
-          <p>Disable Comment</p>
-        </label>
-      ),
-      key: "disable-comment",
-      icon: <MdCommentsDisabled />,
     },
     {
       label: (

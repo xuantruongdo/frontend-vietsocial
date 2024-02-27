@@ -30,10 +30,10 @@ const Timeline = (props: IProps) => {
     <Row gutter={[16, 16]}>
       <Col xs={24} md={16}>
         {currentUser?._id === singleUser?._id && (
-          <PostCreation fetchData={fetchPostsWithAuthor} />
+          <PostCreation fetchPosts={fetchPostsWithAuthor} />
         )}
         {posts.length > 0 ? (
-          <PostList posts={posts} fetchData={fetchPostsWithAuthor} />
+          <PostList posts={posts} fetchPosts={fetchPostsWithAuthor} />
         ) : (
           <Empty />
         )}
