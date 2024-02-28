@@ -5,15 +5,16 @@ interface IProps {
   items: MenuProps["items"];
   icon: ReactNode;
   badge?: ReactNode;
+  type?: string;
 }
 
 const DropdownComponent = (props: IProps) => {
-  const { items, icon, badge } = props;
+  const { items, icon, badge, type } = props;
   return (
     <Dropdown
       menu={{ items }}
       trigger={["click"]}
-      overlayStyle={{ width: 400 }}
+      overlayStyle={{ width: type === "postAction" ? "max-content" : 300 }}
       placement="bottomRight"
     >
       <Badge count={badge}>

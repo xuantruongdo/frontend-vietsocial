@@ -16,6 +16,11 @@ const InputComment = (props: IProps) => {
           placeholder="Add your comment..."
           value={content}
           onChange={(e) => setContent(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleComment(content);
+            }
+          }}
         />
         <Button type="primary" onClick={() => handleComment(content)}>
           <IoSend />

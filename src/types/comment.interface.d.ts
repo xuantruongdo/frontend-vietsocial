@@ -8,6 +8,7 @@ declare global {
             email: string;
             fullname: string;
             avatar: string;
+            isVerify: boolean;
         },
         content: string;
         createdAt: Date;

@@ -8,6 +8,7 @@ declare global {
             fullname: string;
             avatar: string;
             email: string;
+            isVerify: boolean;
         };
         content: string;
         image: string;

@@ -1,8 +1,10 @@
-import { Col, Image, Row } from "antd";
+import "./Following.scss";
+import { Col, Flex, Image, Row } from "antd";
 import { useEffect, useState } from "react";
 import { callFetchFollowingUsers } from "../../../api/api";
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../../../constants/constants";
+import { MdVerified } from "react-icons/md";
 
 interface IProps {
   singleUser: IUser;
@@ -24,28 +26,30 @@ const Following = (props: IProps) => {
   }, [singleUser?._id]);
 
   return (
-    <Row gutter={[8, 8]}>
-        {followingUsers?.map((user: any) => (
-          <Link to={`/profile/${user?._id}`} key={user?._id}>
-            <Col>
-              <Image
-                src={`${BASE_URL}/images/${user?.avatar}`}
-                alt="image"
-                preview={false}
-                style={{
-                  borderRadius: 10,
-                  height: 130,
-                  width: 130,
-                  objectFit: "cover",
-                }}
-              />
+    <Row gutter={[8, 8]} style={{ paddingBottom: 100 }}>
+      {followingUsers?.map((user: any) => (
+        <Link to={`/profile/${user?._id}`} key={user?._id}>
+          <Col className="following__item">
+            <Image
+              src={`${BASE_URL}/images/${user?.avatar}`}
+              alt="image"
+              preview={false}
+              style={{
+                borderRadius: 10,
+                height: 130,
+                width: 130,
+                objectFit: "cover",
+              }}
+            />
+            <Flex gap={5} align="center">
               <h4 style={{ textAlign: "center", marginTop: 5, color: "#666" }}>
                 {user?.fullname}
               </h4>
-            </Col>
-          </Link>
-        ))}
-
+              {user?.isVerify && <MdVerified size={14} color="#0866FF" />}
+            </Flex>
+          </Col>
+        </Link>
+      ))}
     </Row>
   );
 };

@@ -99,6 +99,10 @@ export const callCreatePost = (data: any): Promise<IBackendRes<any>> => {
   return axios.post(`/api/v1/posts`, data);
 };
 
+export const callUpdatePost = (id: string, data: any): Promise<IBackendRes<any>> => {
+  return axios.patch(`/api/v1/posts/${id}`, data);
+};
+
 export const callDeletePost = (id: string): Promise<IBackendRes<any>> => {
   return axios.delete(`/api/v1/posts/${id}`);
 };

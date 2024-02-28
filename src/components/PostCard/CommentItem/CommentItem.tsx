@@ -2,6 +2,7 @@ import { Avatar, Flex, Space, Tag, Typography } from "antd";
 import { BASE_URL } from "../../../constants/constants";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { MdVerified } from "react-icons/md";
 
 interface IProps {
   comment: IComment;
@@ -26,7 +27,11 @@ const CommentItem = (props: IProps) => {
         </Link>
         <Space direction="vertical" style={{ rowGap: 0 }}>
           <Link to={`/profile/${comment?.user._id}`}>
-            <h4>{comment?.user.fullname}</h4>
+          <Flex gap={10} align="center">
+          <h4>{comment?.user.fullname}</h4>
+            {comment?.user.isVerify && <MdVerified color="#0866FF" />}
+          </Flex>
+            
           </Link>
 
           <Typography>{comment?.content}</Typography>

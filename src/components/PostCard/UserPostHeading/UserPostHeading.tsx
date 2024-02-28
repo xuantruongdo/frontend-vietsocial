@@ -1,7 +1,8 @@
-import { Avatar, Space } from "antd";
+import { Avatar, Flex, Space } from "antd";
 import { BASE_URL } from "../../../constants/constants";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { MdVerified } from "react-icons/md";
 
 interface IProps {
   post: IPost;
@@ -16,7 +17,10 @@ const UserPostHeading = (props: IProps) => {
       </Link>
       <Space direction="vertical" style={{ rowGap: 0 }}>
         <Link to={`/profile/${post.author._id}`}>
-          <h4>{post.author.fullname}</h4>
+          <Flex gap={10} align="center">
+            <h4>{post.author.fullname}</h4>
+            {post?.author?.isVerify && <MdVerified color="#0866FF" />}
+          </Flex>
         </Link>
 
         <p>{moment(post.createdAt).fromNow()}</p>

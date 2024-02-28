@@ -1,0 +1,8 @@
+.following__item {
+  img {
+    transition: all 0.2s;
+    &:hover {
+      scale: 0.9;
+    }
+  }
+}
