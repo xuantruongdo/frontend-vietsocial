@@ -1,10 +1,11 @@
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Content from "../../components/Content/Content";
-import { Flex } from "antd";
+import { Flex, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { callFetchPosts } from "../../api/api";
+import { LoadingOutlined } from "@ant-design/icons";
 
-interface IProps{
+interface IProps {
   onlineUsers: IUser[];
 }
 const Feed = (props: IProps) => {
@@ -28,7 +29,25 @@ const Feed = (props: IProps) => {
   return (
     <Flex>
       <Sidebar />
-      <Content posts={posts} fetchPosts={fetchPosts} loading={loading} onlineUsers={onlineUsers} />
+      {!loading ? (
+        <Content
+          posts={posts}
+          fetchPosts={fetchPosts}
+          onlineUsers={onlineUsers}
+        />
+      ) : (
+        <div
+          style={{
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+        </div>
+      )}
     </Flex>
   );
 };

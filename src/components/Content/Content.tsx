@@ -3,19 +3,17 @@ import PostList from "../PostList/PostList";
 import Rightbar from "../Rightbar/Rightbar";
 import Story from "../Story/Story";
 import "./Content.scss";
-import { Empty, Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Empty } from "antd";
 import { useSelector } from "react-redux";
 
 interface IProps {
   posts: IPost[];
   fetchPosts: any;
-  loading: boolean;
   onlineUsers: IUser[];
 }
 
 const Content = (props: IProps) => {
-  const { posts, fetchPosts, loading, onlineUsers } = props;
+  const { posts, fetchPosts, onlineUsers } = props;
   const currentUser = useSelector((state: any) => state.account.user);
 
   return (
@@ -32,16 +30,11 @@ const Content = (props: IProps) => {
               justifyContent: "center",
             }}
           >
-            <Spin
-              spinning={loading}
-              indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
-            >
-              {posts.length > 0 ? (
-                <PostList posts={posts} fetchPosts={fetchPosts} />
-              ) : (
-                <Empty />
-              )}
-            </Spin>
+            {posts.length > 0 ? (
+              <PostList posts={posts} fetchPosts={fetchPosts} />
+            ) : (
+              <Empty />
+            )}
           </div>
         </div>
       </div>
