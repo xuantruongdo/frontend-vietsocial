@@ -1,5 +1,5 @@
 import "./CommentPreview.scss";
-import { Col, Image, Row } from "antd";
+import { Col, Image, Row, notification } from "antd";
 import InputComment from "../InputComment/InputComment";
 import CommentItem from "../CommentItem/CommentItem";
 import UserPostHeading from "../UserPostHeading/UserPostHeading";
@@ -32,6 +32,16 @@ const CommentPreview = (props: IProps) => {
           createdAt: new Date(),
         });
       }
+    }
+    else {
+      notification.error({
+        message: "An error occurred",
+        description:
+          res.message && Array.isArray(res.message)
+            ? res.message[0]
+            : res.message,
+        duration: 5,
+      });
     }
   };
 

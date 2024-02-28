@@ -1,4 +1,4 @@
-import { Flex, Space } from "antd";
+import { Flex, Space, notification } from "antd";
 import { FaCommentDots, FaHeart } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { callLike } from "../../../api/api";
@@ -24,6 +24,16 @@ const PostAction = (props: IProps) => {
         post: res?.data,
         type: "like",
         createdAt: new Date(),
+      });
+    }
+    else {
+      notification.error({
+        message: "An error occurred",
+        description:
+          res.message && Array.isArray(res.message)
+            ? res.message[0]
+            : res.message,
+        duration: 5,
       });
     }
 
