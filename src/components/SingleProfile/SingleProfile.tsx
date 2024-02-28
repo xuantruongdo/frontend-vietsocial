@@ -186,11 +186,13 @@ const SingleProfile = (props: IProps) => {
         <div className="cover">
           <img src={`${BASE_URL}/images/${singleUser?.cover}`} alt="" />
           <div className="edit__cover">
-            <Upload {...propsUploadCover}>
-              <div className="icon">
-                <FaCamera color="black" />
-              </div>
-            </Upload>
+            {singleUser?._id === currentUser?._id && (
+              <Upload {...propsUploadCover}>
+                <div className="icon">
+                  <FaCamera color="black" />
+                </div>
+              </Upload>
+            )}
           </div>
         </div>
         <div className="avatar">
@@ -204,11 +206,13 @@ const SingleProfile = (props: IProps) => {
                 <div className="user_status status_online"></div>
               )
           )}
-          <Upload {...propsUploadAvatar}>
-            <div className="change__avatar--icon">
-              <FaCamera color="black" />
-            </div>
-          </Upload>
+          {singleUser?._id === currentUser?._id && (
+            <Upload {...propsUploadAvatar}>
+              <div className="change__avatar--icon">
+                <FaCamera color="black" />
+              </div>
+            </Upload>
+          )}
         </div>
         <div className="info">
           <h1>
