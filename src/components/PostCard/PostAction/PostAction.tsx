@@ -17,16 +17,22 @@ const PostAction = (props: IProps) => {
 
   const handleLike = async () => {
     const res = await callLike(post?._id);
-    setLikedPost(res.data)
-    if (!likedPost?.likes?.some((user: any) => user?._id === currentUser?._id) && res?.data?.author?._id !== currentUser?._id) {
-      socket?.emit("like", {
-        sender: currentUser,
-        post: res?.data,
-        type: "like",
-        createdAt: new Date(),
-      });
-    }
-    else {
+    if (res && res.data) {
+      setLikedPost(res.data);
+      if (
+        !likedPost?.likes?.some(
+          (user: any) => user?._id === currentUser?._id
+        ) &&
+        res?.data?.author?._id !== currentUser?._id
+      ) {
+        socket?.emit("like", {
+          sender: currentUser,
+          post: res?.data,
+          type: "like",
+          createdAt: new Date(),
+        });
+      }
+    } else {
       notification.error({
         message: "An error occurred",
         description:
@@ -36,22 +42,27 @@ const PostAction = (props: IProps) => {
         duration: 5,
       });
     }
-
-  }
+  };
   return (
     <div className="post__action">
       <Flex gap={30}>
         <Space>
           <div className="icon" onClick={handleLike}>
-            <FaHeart color={likedPost?.likes?.some((t: any) => t._id === currentUser?._id) ? "red" : "#aaa" } />
+            <FaHeart
+              color={
+                likedPost?.likes?.some((t: any) => t._id === currentUser?._id)
+                  ? "red"
+                  : "#aaa"
+              }
+            />
           </div>
-          <strong>{likedPost?.likes.length }</strong>
+          <strong>{likedPost?.likes.length}</strong>
         </Space>
         <Space>
           <div className="icon" onClick={showModal}>
-            <FaCommentDots color="#aaa"/>
+            <FaCommentDots color="#aaa" />
           </div>
-          <strong>{likedPost?.comments.length }</strong>
+          <strong>{likedPost?.comments.length}</strong>
         </Space>
       </Flex>
     </div>
