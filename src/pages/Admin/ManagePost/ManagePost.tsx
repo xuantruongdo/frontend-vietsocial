@@ -10,7 +10,6 @@ const ManagePost = () => {
   const [current, setCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [total, setTotal] = useState(0);
-  const [filter, setFilter] = useState("");
   const [sortQuery, setSortQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -33,9 +32,9 @@ const ManagePost = () => {
 
   useEffect(() => {
     fetchPostList(null);
-  }, [current, pageSize, filter, sortQuery]);
+  }, [current, pageSize, sortQuery]);
 
-  const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {
+  const onChange = (pagination: any, sorter: any) => {
     if (pagination && pagination?.current !== current) {
       setCurrent(pagination.current);
     }
@@ -58,7 +57,7 @@ const ManagePost = () => {
     {
       title: "Id",
       dataIndex: "_id",
-      render: (text: any, record: any, index: number) => {
+      render: (record: any) => {
         return <a href="#">{record._id}</a>;
       },
     },
@@ -78,13 +77,13 @@ const ManagePost = () => {
       title: "Create At",
       dataIndex: "createdAt",
       sorter: true,
-      render: (text: any, record: any, index: number) => {
+      render: (record: any) => {
         return <p>{moment(record?.createdAt).format("DD-MM-YYYY HH:mm:ss")}</p>;
       },
     },
     {
       title: "Action",
-      render: (text: any, record: any, index: number) => {
+      render: () => {
         return (
           <div>
             <Popconfirm

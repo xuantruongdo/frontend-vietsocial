@@ -44,7 +44,7 @@ import useSocket from "../../hooks/useSocket";
 import { useEffect, useState } from "react";
 import { useHasMounted } from "../../hooks/useHasMounted";
 import moment from "moment";
-import { MdOutlinePassword } from "react-icons/md";
+import { MdOutlineAdminPanelSettings, MdOutlinePassword } from "react-icons/md";
 import useModal from "../../hooks/useModal";
 
 type FieldType = {
@@ -248,6 +248,8 @@ const Header = () => {
     ),
   });
 
+  console.log(currentUser);
+
   const accountItems: MenuProps["items"] = [
     {
       key: "current-user",
@@ -297,6 +299,20 @@ const Header = () => {
       icon: <LogoutOutlined />,
     },
   ];
+
+  if (currentUser?.role.name === "SUPER_ADMIN") {
+    accountItems.splice(1, 0, {
+      label: (
+        <Link to={"/admin"}>
+          <label>
+            <p>Admin</p>
+          </label>
+        </Link>
+      ),
+      key: "admin",
+      icon: <MdOutlineAdminPanelSettings />,
+    });
+  }
 
   const callFindUsersByUserName = async (term: string) => {
     try {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Table,
   Row,
@@ -25,7 +25,6 @@ const ManageUser = () => {
   const [current, setCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [total, setTotal] = useState(0);
-  const [filter, setFilter] = useState("");
   const [sortQuery, setSortQuery] = useState("");
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
@@ -51,9 +50,9 @@ const ManageUser = () => {
 
   useEffect(() => {
     fetchUserList(null);
-  }, [current, pageSize, filter, sortQuery]);
+  }, [current, pageSize, sortQuery]);
 
-  const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {
+  const onChange = (pagination: any, sorter: any) => {
     if (pagination && pagination?.current !== current) {
       setCurrent(pagination.current);
     }
@@ -123,7 +122,7 @@ const ManageUser = () => {
     {
       title: "Id",
       dataIndex: "_id",
-      render: (text: any, record: any, index: number) => {
+      render: (record: any) => {
         return (
           <a href="#" onClick={() => showDrawer(record)}>
             {record._id}
@@ -144,7 +143,7 @@ const ManageUser = () => {
     {
       title: "Active",
       dataIndex: "isActive",
-      render: (text: any, record: any, index: number) => {
+      render: (record: any) => {
         return (
           <Switch
             defaultChecked={record?.isActive}
@@ -158,7 +157,7 @@ const ManageUser = () => {
     {
       title: "Verify",
       dataIndex: "isVerify",
-      render: (text: any, record: any, index: number) => {
+      render: (record: any) => {
         return (
           <Switch
             defaultChecked={record?.isVerify}
@@ -173,13 +172,13 @@ const ManageUser = () => {
       title: "Create At",
       dataIndex: "createdAt",
       sorter: true,
-      render: (text: any, record: any, index: number) => {
+      render: (record: any) => {
         return <p>{moment(record?.createdAt).format("DD-MM-YYYY HH:mm:ss")}</p>;
       },
     },
     {
       title: "Action",
-      render: (text: any, record: any, index: number) => {
+      render: () => {
         return (
           <div>
             <Popconfirm

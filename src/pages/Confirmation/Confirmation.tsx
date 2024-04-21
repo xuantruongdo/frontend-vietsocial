@@ -1,14 +1,9 @@
 import { Button, Card, Form, Input, message, notification } from "antd";
 import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import {
   callActive,
-  callFetchUserByEmail,
-  callGenerateNewPassword,
-  callSendEmail,
 } from "../../api/api";
-import { BASE_URL } from "../../constants/constants";
 
 type FieldType = {
   confirmationCode?: string;

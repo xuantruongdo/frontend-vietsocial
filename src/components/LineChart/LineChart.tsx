@@ -1,5 +1,4 @@
 import { Col } from "antd";
-import React from "react";
 import {
   LineChart,
   Line,
@@ -23,8 +22,6 @@ const LineChartExample = (props: any) => {
         <Tooltip />
         <Legend />
         <Line type="monotone" dataKey="sl" stroke="#8884d8" />
-        {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
-        {/* <Line type="monotone" dataKey="amt" stroke="#82ca9d" /> */}
       </LineChart>
       </Col>
     </div>
