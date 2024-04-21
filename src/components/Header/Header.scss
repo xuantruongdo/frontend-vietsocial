@@ -15,31 +15,41 @@ header {
     margin: 8px 0;
     cursor: pointer;
   }
-  .header__search {
+  .search{
     position: relative;
-    border-radius: 6px;
-    margin-left: -10px;
-    .header__search-icon {
-      position: absolute;
-      pointer-events: none;
-      top: 50%;
-      left: 16px;
-      -webkit-transform: translateY(-50%);
-      transform: translateY(-50%);
-      color: #737373;
+    .header__search {
+      position: relative;
+      border-radius: 6px;
+      margin-left: -10px;
+      .header__search-icon {
+        position: absolute;
+        pointer-events: none;
+        top: 50%;
+        left: 16px;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        color: #737373;
+      }
+      input {
+        height: 44px;
+        color: #393939;
+        padding: 0 30px 0 40px;
+        outline: 0;
+        background: #f0f2f5;
+        border: 1px solid transparent;
+        border-radius: 2rem;
+        min-width: 550px;
+        font-size: 15px;
+      }
     }
-    input {
-      height: 44px;
-      color: #393939;
-      padding: 0 30px 0 40px;
-      outline: 0;
-      background: #f0f2f5;
-      border: 1px solid transparent;
-      border-radius: 2rem;
-      min-width: 550px;
-      font-size: 15px;
+    .search-results{
+      position: absolute;
+      background-color: white;
+      top: 50px;
+      width: 100%;
     }
   }
+
   .header__widgets {
     display: flex;
     align-items: center;

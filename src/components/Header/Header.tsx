@@ -3,10 +3,12 @@ import logo from "../../assets/images/logo.png";
 import {
   Avatar,
   Button,
+  Card,
   Flex,
   Form,
   Image,
   Input,
+  List,
   Space,
   message,
   notification,
@@ -21,6 +23,7 @@ import {
   SearchOutlined,
   SettingOutlined,
   CheckSquareOutlined,
+  CloseCircleOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { FaRss } from "react-icons/fa";
@@ -31,7 +34,11 @@ import Sidebar from "../Sidebar/Sidebar";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../../constants/constants";
-import { callChangePassword, callLogout } from "../../api/api";
+import {
+  callChangePassword,
+  callFindUsersByFullName,
+  callLogout,
+} from "../../api/api";
 import { doLogoutAction } from "../../redux/account/accountSlice";
 import useSocket from "../../hooks/useSocket";
 import { useEffect, useState } from "react";
@@ -53,6 +60,9 @@ const Header = () => {
   const socket = useSocket();
   const hasMounted = useHasMounted();
   const [form] = Form.useForm();
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchResults, setSearchResults] = useState<IUser[]>([]);
+  const [typingTimeout, setTypingTimeout] = useState<number | null>(null);
 
   const { drawer, showDrawer } = useDrawer({
     title: (
@@ -138,7 +148,10 @@ const Header = () => {
         <Form.Item<FieldType>
           name="confirmationPassword"
           rules={[
-            { required: true, message: "Please input your confirmation password!" },
+            {
+              required: true,
+              message: "Please input your confirmation password!",
+            },
           ]}
         >
           <Input placeholder="Confirmation password" />
@@ -285,6 +298,30 @@ const Header = () => {
     },
   ];
 
+  const callFindUsersByUserName = async (term: string) => {
+    try {
+      const res = await callFindUsersByFullName(term);
+      if (res && res.data) {
+        setSearchResults(res.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    if (typingTimeout) {
+      clearTimeout(typingTimeout);
+    }
+    const timeoutId = setTimeout(() => {
+      callFindUsersByUserName(searchTerm);
+    }, 500);
+
+    setTypingTimeout(timeoutId);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchTerm]);
+
   return (
     <header>
       <div className="mobile">
@@ -297,10 +334,61 @@ const Header = () => {
           <Image preview={false} src={logo} width={70} />
         </div>
       </Link>
-      <div className="header__search">
-        <SearchOutlined className="header__search-icon" />
-        <input type="text" placeholder="Search..." />
+      <div className="search">
+        <div className="header__search">
+          <SearchOutlined className="header__search-icon" />
+          <Flex>
+            <Input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <CloseCircleOutlined
+              style={{
+                color: searchTerm ? "#111" : "#ccc",
+                transform: "translateX(-30px)",
+              }}
+              className="header__search-clear"
+              onClick={() => setSearchTerm("")}
+            />
+          </Flex>
+        </div>
+
+        <div className="search-results">
+          {searchTerm.trim() ? (
+            <Card>
+              <List
+                className="demo-loadmore-list"
+                itemLayout="horizontal"
+                dataSource={searchResults}
+                renderItem={(item) => (
+                  <List.Item>
+                    <List.Item.Meta
+                      style={{ alignItems: "center" }}
+                      avatar={
+                        <Avatar src={`${BASE_URL}/images/${item.avatar}`} />
+                      }
+                      title={
+                        <Link
+                          to={`/profile/${item._id}`}
+                          onClick={() => {
+                            setSearchTerm("");
+                            setSearchResults([]);
+                          }}
+                        >
+                          {item.fullname}
+                        </Link>
+                      }
+                    />
+                  </List.Item>
+                )}
+              />
+            </Card>
+          ) : null}
+        </div>
       </div>
+
       {currentUser._id ? (
         <div className="header__widgets">
           <DropdownComponent

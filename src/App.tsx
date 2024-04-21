@@ -14,6 +14,12 @@ import { useEffect, useState } from "react";
 import { doGetAccountAction } from "./redux/account/accountSlice";
 import Setting from "./pages/Setting/Setting";
 import useSocket from "./hooks/useSocket";
+import LayoutAdmin from "./pages/Admin/LayoutAdmin";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import ManageUser from "./pages/Admin/ManageUser/ManageUser";
+import Dashboard from "./pages/Admin/Dashboard/Dashboard";
+import ManagePost from "./pages/Admin/ManagePost/ManagePost";
+import Confirmation from "./pages/Confirmation/Confirmation";
 
 function App() {
   const socket = useSocket();
@@ -79,12 +85,47 @@ function App() {
       ],
     },
     {
+      path: "/admin",
+      element: <LayoutAdmin />,
+      errorElement: <NotFound />,
+      children: [
+        {
+          index: true,
+          element: (
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "user",
+          element: (
+            <ProtectedRoute>
+              <ManageUser />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "post",
+          element: (
+            <ProtectedRoute>
+              <ManagePost />
+            </ProtectedRoute>
+          ),
+        },
+      ],
+    },
+    {
       path: "/login",
       element: <Login />,
     },
     {
       path: "/register",
       element: <Register />,
+    },
+    {
+      path: "/confirmation",
+      element: <Confirmation />,
     },
     {
       path: "/forget",

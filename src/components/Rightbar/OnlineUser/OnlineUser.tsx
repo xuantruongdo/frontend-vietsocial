@@ -37,8 +37,7 @@ const OnlineUser = (props: IProps) => {
       {onlineUsers?.map((user: any) => {
         if (user?._id !== currentUser?._id)
           return (
-            <Space
-              direction="vertical"
+            <div
               key={user?._id}
               onClick={() => accessChat(user?._id)}
             >
@@ -49,7 +48,7 @@ const OnlineUser = (props: IProps) => {
                 </div>
                 <div className="contact__username"> {user?.fullname}</div>
               </Space>
-            </Space>
+            </div>
           );
       })}
     </>

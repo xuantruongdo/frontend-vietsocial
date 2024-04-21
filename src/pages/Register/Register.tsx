@@ -43,8 +43,8 @@ const Register = () => {
     setLoading(false);
 
     if (res && res.data) {
-      message.success("Account registration successful");
-      navigate("/login");
+      message.success("Account registration successful. Please check your email");
+      navigate(`/confirmation?email=${email}`);
     } else {
       notification.error({
         message: "An error occurred",
