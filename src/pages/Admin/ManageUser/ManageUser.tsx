@@ -16,22 +16,41 @@ import {
   message,
 } from "antd";
 
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { callFetchListUser, callUpdateUser } from "../../../api/api";
+import { DeleteOutlined } from "@ant-design/icons";
+import {
+  callDeleteUser,
+  callFetchListUser,
+  callUpdateUser,
+} from "../../../api/api";
 import moment from "moment";
 
 const ManageUser = () => {
   const [listUser, setListUser] = useState<IUser[]>([]);
-  const [current, setCurrent] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
-  const [total, setTotal] = useState(0);
-  const [sortQuery, setSortQuery] = useState("");
+  const [current, setCurrent] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(5);
+  const [total, setTotal] = useState<number>(0);
+  const [sortQuery, setSortQuery] = useState<string>("sort=-updatedAt");
   const [form] = Form.useForm();
-  const [isLoading, setIsLoading] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [dataViewDetail, setDataViewDetail] = useState<any>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const [dataViewDetail, setDataViewDetail] = useState<IUser | any>();
+  const [drawerWidth, setDrawerWidth] = useState<string>('80%');
 
-  const fetchUserList = async (filter: any) => {
+  useEffect(() => {
+    const updateWidth = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth <= 768) {
+        setDrawerWidth('80%');
+      } else {
+        setDrawerWidth('50%');
+      }
+    };
+
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
+
+  const fetchUserList = async (filter: string) => {
     setIsLoading(true);
     let query = `current=${current}&pageSize=${pageSize}`;
     if (filter) {
@@ -49,10 +68,10 @@ const ManageUser = () => {
   };
 
   useEffect(() => {
-    fetchUserList(null);
+    fetchUserList("");
   }, [current, pageSize, sortQuery]);
 
-  const onChange = (pagination: any, sorter: any) => {
+  const onChange = (pagination: any, _: any, sorter: any, __: any) => {
     if (pagination && pagination?.current !== current) {
       setCurrent(pagination.current);
     }
@@ -71,7 +90,7 @@ const ManageUser = () => {
     }
   };
 
-  const handleSearch = (filter: any) => {
+  const handleSearch = (filter: string) => {
     fetchUserList(filter);
   };
 
@@ -90,11 +109,11 @@ const ManageUser = () => {
 
   const handleClear = () => {
     form.resetFields();
-    fetchUserList(null);
+    fetchUserList("");
   };
 
   const handleSwitchChange = async (
-    record: any,
+    record: IUser,
     checked: boolean,
     type: string
   ) => {
@@ -118,11 +137,28 @@ const ManageUser = () => {
     }
   };
 
+  const handleDeleteUser = async (id: string) => {
+    const res = await callDeleteUser(id);
+    if (res && res.data) {
+      message.success("Delete user successfully");
+      fetchUserList("");
+    } else {
+      notification.error({
+        message: "An error occurred",
+        description:
+          res.message && Array.isArray(res.message)
+            ? res.message[0]
+            : res.message,
+        duration: 5,
+      });
+    }
+  };
+
   const columns = [
     {
       title: "Id",
       dataIndex: "_id",
-      render: (record: any) => {
+      render: (_: string, record: IUser) => {
         return (
           <a href="#" onClick={() => showDrawer(record)}>
             {record._id}
@@ -143,7 +179,7 @@ const ManageUser = () => {
     {
       title: "Active",
       dataIndex: "isActive",
-      render: (record: any) => {
+      render: (_: boolean, record: IUser) => {
         return (
           <Switch
             defaultChecked={record?.isActive}
@@ -157,7 +193,7 @@ const ManageUser = () => {
     {
       title: "Verify",
       dataIndex: "isVerify",
-      render: (record: any) => {
+      render: (_: boolean, record: IUser) => {
         return (
           <Switch
             defaultChecked={record?.isVerify}
@@ -172,20 +208,20 @@ const ManageUser = () => {
       title: "Create At",
       dataIndex: "createdAt",
       sorter: true,
-      render: (record: any) => {
+      render: (_: Date, record: IUser) => {
         return <p>{moment(record?.createdAt).format("DD-MM-YYYY HH:mm:ss")}</p>;
       },
     },
     {
       title: "Action",
-      render: () => {
+      render: (_: any, record: IUser) => {
         return (
           <div>
             <Popconfirm
               placement="leftTop"
               title={"Confirm user deletion"}
               description={"Are you sure to delete this user?"}
-              //   onConfirm={() => handleDeleteUser(record._id)}
+              onConfirm={() => handleDeleteUser(record._id)}
               okText="Yes"
               cancelText="No"
             >
@@ -194,19 +230,19 @@ const ManageUser = () => {
               </span>
             </Popconfirm>
 
-            <span
+            {/* <span
               style={{ cursor: "pointer", margin: "0 20px" }}
               //   onClick={() => showModalUpdate(record)}
             >
               <EditOutlined style={{ color: "#f57800" }} />
-            </span>
+            </span> */}
           </div>
         );
       },
     },
   ];
 
-  const showDrawer = (record: any) => {
+  const showDrawer = (record: IUser) => {
     setOpen(true);
     setDataViewDetail(record);
   };
@@ -221,17 +257,17 @@ const ManageUser = () => {
         autoComplete="off"
       >
         <Row gutter={[16, 16]} justify="space-between">
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <Form.Item label="FullName" name="fullname">
               <Input />
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <Form.Item label="Email" name="email">
               <Input />
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <Button type="primary" htmlType="submit">
               Search
             </Button>
@@ -249,6 +285,7 @@ const ManageUser = () => {
         dataSource={listUser}
         onChange={onChange}
         rowKey="_id"
+        scroll={{ x: '100%' }}
         pagination={{
           current: current,
           pageSize: pageSize,
@@ -266,7 +303,7 @@ const ManageUser = () => {
 
       <Drawer
         title="User detail"
-        width="50%"
+        width={drawerWidth}
         onClose={() => setOpen(false)}
         open={open}
         extra={

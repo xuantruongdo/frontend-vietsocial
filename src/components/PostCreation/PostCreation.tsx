@@ -1,6 +1,6 @@
 import "./PostCreation.scss";
 import { MdInsertPhoto } from "react-icons/md";
-import { Avatar, Card, Flex, Space } from "antd";
+import { Avatar, Card, Flex, Space, message } from "antd";
 import { FaUserPlus } from "react-icons/fa";
 import { FaFaceLaugh } from "react-icons/fa6";
 import ModalCreationPost from "./ModalCreationPost";
@@ -16,6 +16,11 @@ const PostCreation = (props: IProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const user = useSelector((state: any) => state.account.user);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const info = () => {
+    messageApi.info("The feature is currently under development!");
+  };
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -27,6 +32,7 @@ const PostCreation = (props: IProps) => {
 
   return (
     <div className="post__creation">
+      {contextHolder}
       <Card>
         <Flex align="center" gap={20}>
           <div>
@@ -58,13 +64,13 @@ const PostCreation = (props: IProps) => {
             </div>
             <p>Photo / Video</p>
           </Space>
-          <Space style={{ cursor: "pointer", marginTop: 20 }}>
+          <Space style={{ cursor: "pointer", marginTop: 20 }} onClick={info}>
             <div className="icon tag">
               <FaUserPlus style={{ fontSize: 20 }} />
             </div>
             <p>Tag Friend</p>
           </Space>
-          <Space style={{ cursor: "pointer", marginTop: 20 }}>
+          <Space style={{ cursor: "pointer", marginTop: 20 }} onClick={info}>
             <div className="icon feeling">
               <FaFaceLaugh style={{ fontSize: 20 }} />
             </div>

@@ -248,8 +248,6 @@ const Header = () => {
     ),
   });
 
-  console.log(currentUser);
-
   const accountItems: MenuProps["items"] = [
     {
       key: "current-user",

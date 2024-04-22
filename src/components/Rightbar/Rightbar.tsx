@@ -4,8 +4,6 @@ import GiftIcon from "../../assets/images/gift-icon.png";
 import OnlineUser from "./OnlineUser/OnlineUser";
 import ChatGroup from "./ChatGroup/ChatGroup";
 
-
-
 interface IProps {
   onlineUsers: IUser[];
 }
@@ -30,8 +28,7 @@ const Rightbar = (props: IProps) => {
         <Space>
           <img src={GiftIcon} alt="gift_icon" />
           <div>
-            <strong>Jessica Erica</strong> and <strong>two others</strong> have
-            a birthdays to day.
+            <strong>Do Xuan Truong's birthday </strong>is on 1/5.
           </div>
         </Space>
       </Card>

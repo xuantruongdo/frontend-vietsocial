@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
-import { Table, Popconfirm } from "antd";
+import { Table, Popconfirm, message, notification } from "antd";
 
 import { DeleteOutlined } from "@ant-design/icons";
-import { callFetchListPost } from "../../../api/api";
+import { callDeletePost, callFetchListPost } from "../../../api/api";
 import moment from "moment";
 
 const ManagePost = () => {
   const [listPost, setListPost] = useState<IPost[]>([]);
-  const [current, setCurrent] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
-  const [total, setTotal] = useState(0);
-  const [sortQuery, setSortQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [current, setCurrent] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(5);
+  const [total, setTotal] = useState<number>(0);
+  const [sortQuery, setSortQuery] = useState<string>("sort=-updatedAt");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const fetchPostList = async (filter: any) => {
+  const fetchPostList = async (filter: string) => {
     setIsLoading(true);
     let query = `current=${current}&pageSize=${pageSize}`;
     if (filter) {
@@ -31,10 +31,10 @@ const ManagePost = () => {
   };
 
   useEffect(() => {
-    fetchPostList(null);
+    fetchPostList("");
   }, [current, pageSize, sortQuery]);
 
-  const onChange = (pagination: any, sorter: any) => {
+  const onChange = (pagination: any, _: any, sorter: any, __: any) => {
     if (pagination && pagination?.current !== current) {
       setCurrent(pagination.current);
     }
@@ -53,11 +53,28 @@ const ManagePost = () => {
     }
   };
 
+  const handleDeletePost = async (id: string) => {
+    const res = await callDeletePost(id)
+    if (res && res.data) {
+      message.success("Delete post successfully");
+      fetchPostList("");
+    } else {
+      notification.error({
+        message: "An error occurred",
+        description:
+          res.message && Array.isArray(res.message)
+            ? res.message[0]
+            : res.message,
+        duration: 5,
+      });
+    }
+  }
+
   const columns = [
     {
       title: "Id",
       dataIndex: "_id",
-      render: (record: any) => {
+      render: (_: string, record: IPost) => {
         return <a href="#">{record._id}</a>;
       },
     },
@@ -77,20 +94,20 @@ const ManagePost = () => {
       title: "Create At",
       dataIndex: "createdAt",
       sorter: true,
-      render: (record: any) => {
+      render: (_: Date, record: IPost) => {
         return <p>{moment(record?.createdAt).format("DD-MM-YYYY HH:mm:ss")}</p>;
       },
     },
     {
       title: "Action",
-      render: () => {
+      render: (_: any, record: IPost) => {
         return (
           <div>
             <Popconfirm
               placement="leftTop"
               title={"Confirm post deletion"}
               description={"Are you sure to delete this post?"}
-              //   onConfirm={() => handleDeleteUser(record._id)}
+                onConfirm={() => handleDeletePost(record._id)}
               okText="Yes"
               cancelText="No"
             >

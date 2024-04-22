@@ -29,10 +29,15 @@ const ModalCreationPost = (props: IProps) => {
 
   const currentUser = useSelector((state: any) => state.account.user);
 
-  const [content, setContent] = useState<string>("")
+  const [content, setContent] = useState<string>("");
   const [loadingPost, setLoadingPost] = useState<boolean>(false);
   const [loadingUpload, setLoadingUpload] = useState<boolean>(false);
   const [urlImage, setUrlImage] = useState<string>("");
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const info = () => {
+    messageApi.info("The feature is currently under development!");
+  };
 
   const handleCreatePost = async () => {
     if (!content && !urlImage) {
@@ -109,11 +114,8 @@ const ModalCreationPost = (props: IProps) => {
   };
 
   return (
-    <Modal
-      open={isModalOpen}
-      onCancel={closeModal}
-      footer={[]}
-    >
+    <Modal open={isModalOpen} onCancel={closeModal} footer={[]}>
+      {contextHolder}
       <Typography
         style={{
           textAlign: "center",
@@ -140,7 +142,11 @@ const ModalCreationPost = (props: IProps) => {
             style={{ width: "50px", height: "50px", borderRadius: "50%" }}
           />
         </div>
-        <Input.TextArea placeholder="What's on your mind ?" value={content} onChange={(e) => setContent(e.target.value)}/>
+        <Input.TextArea
+          placeholder="What's on your mind ?"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
       </div>
 
       <div className="preview">
@@ -162,13 +168,13 @@ const ModalCreationPost = (props: IProps) => {
             </div>
           </Upload>
 
-          <div className="icon tag">
+          <div className="icon tag" onClick={info}>
             <FaUserPlus style={{ fontSize: 24 }} />
           </div>
-          <div className="icon feeling">
+          <div className="icon feeling" onClick={info}>
             <FaFaceLaugh style={{ fontSize: 24 }} />
           </div>
-          <div className="icon location">
+          <div className="icon location" onClick={info}>
             <FaLocationDot style={{ fontSize: 24 }} />
           </div>
         </Space>

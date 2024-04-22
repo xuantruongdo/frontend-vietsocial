@@ -9,7 +9,6 @@ export const callActive = (data: any): Promise<IBackendRes<any>> => {
   return axios.post("/api/v1/auth/active", data);
 };
 
-
 export const callLogin = (data: ILoginDto): Promise<IBackendRes<ILoginRes>> => {
   return axios.post("/api/v1/auth/login", data);
 };
@@ -77,6 +76,10 @@ export const callUpdateUser = (
   data: any
 ): Promise<IBackendRes<any>> => {
   return axios.patch(`/api/v1/users/${id}`, data);
+};
+
+export const callDeleteUser = (id: string): Promise<IBackendRes<any>> => {
+  return axios.delete(`/api/v1/users/${id}`);
 };
 
 export const callFindUsersByFullName = (

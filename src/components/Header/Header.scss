@@ -182,10 +182,18 @@ header {
     .mobile{
       padding-left: 20px;
     }
-    .header__search {
-      padding-right: 20px;
-      input{
-        min-width: unset;
+    .search{
+      .header__search {
+        input {
+          min-width: unset;
+        }
+      }
+      .search-results{
+        position: absolute;
+        background-color: white;
+        top: 50px;
+        width: 100%;
+        left: -30px;
       }
     }
     .login__action{
