@@ -184,8 +184,9 @@ header {
     }
     .search{
       .header__search {
+        padding-right: 0;
         input {
-          min-width: unset;
+          min-width: 250px;
         }
       }
       .search-results{
@@ -193,7 +194,7 @@ header {
         background-color: white;
         top: 50px;
         width: 100%;
-        left: -30px;
+        left: -10px;
       }
     }
     .login__action{
