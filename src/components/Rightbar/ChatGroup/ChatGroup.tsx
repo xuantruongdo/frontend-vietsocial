@@ -30,8 +30,7 @@ const ChatGroup = () => {
   return (
     <>
       {groupChats?.map((chat) => (
-        <Space
-          direction="vertical"
+        <div
           key={chat?._id}
           onClick={() => accessChat(chat)}
         >
@@ -42,7 +41,7 @@ const ChatGroup = () => {
             </div>
             <div className="contact__username"> {chat?.chatName}</div>
           </Space>
-        </Space>
+        </div>
       ))}
     </>
   );

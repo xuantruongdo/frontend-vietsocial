@@ -6,6 +6,7 @@ import {
   Input,
   Popconfirm,
   Popover,
+  Space,
   message,
   notification,
 } from "antd";
@@ -19,6 +20,8 @@ import { useEffect, useState } from "react";
 import { callLeaveGroupChat, callSendMessage } from "../../api/api";
 import { doSelectedChatAction } from "../../redux/chat/chatSlice";
 import useSocket from "../../hooks/useSocket";
+import { IoIosSettings } from "react-icons/io";
+import ModalManageChat from "./ModalManageChat";
 
 interface IProps {
   messages: IMessage[];
@@ -31,9 +34,9 @@ const ChatBox = (props: IProps) => {
   const currentUser = useSelector((state: any) => state.account.user);
   const selectedChat = useSelector((state: any) => state.chat.selectedChat);
   const [content, setContent] = useState<string>("");
+  const [isOpenModalSetting, setIsOpenModalSetting] = useState<boolean>(false);
   const dispatch = useDispatch();
   const socket = useSocket();
-
 
   const sendMessage = async () => {
     if (!content)
@@ -102,19 +105,27 @@ const ChatBox = (props: IProps) => {
             ? selectedChat?.chatName
             : checkReceiver(selectedChat?.users, currentUser?._id)?.fullname}
         </h3>
-        {selectedChat?.isGroupChat && (
-          <Popconfirm
-            title="Delete the group"
-            description="Are you sure to leave this group?"
-            onConfirm={confirm}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button danger>
-              <IoArrowRedoOutline color="red" />
+        <Space>
+          {selectedChat?.groupAdmin?._id === currentUser?._id && (
+            <Button value="default" onClick={() => setIsOpenModalSetting(true)}>
+              <IoIosSettings color="blue" />
             </Button>
-          </Popconfirm>
-        )}
+          )}
+
+          {selectedChat?.isGroupChat && (
+            <Popconfirm
+              title="Delete the group"
+              description="Are you sure to leave this group?"
+              onConfirm={confirm}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button danger>
+                <IoArrowRedoOutline color="red" />
+              </Button>
+            </Popconfirm>
+          )}
+        </Space>
       </Flex>
 
       <div className="chatbox__content">
@@ -188,6 +199,12 @@ const ChatBox = (props: IProps) => {
           </Flex>
         </div>
       </div>
+      <ModalManageChat
+        chat={selectedChat}
+        isOpenModalSetting={isOpenModalSetting}
+        setIsOpenModalSetting={setIsOpenModalSetting}
+        fetchChats={fetchChats}
+      />
     </div>
   );
 };

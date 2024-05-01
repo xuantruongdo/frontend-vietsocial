@@ -227,7 +227,7 @@ const SingleProfile = (props: IProps) => {
               <Button onClick={accessChat}>Message</Button>
               <Button type="primary" onClick={handleFollow}>
                 {singleUser?.followers.includes(currentUser?._id)
-                  ? "UnFllow"
+                  ? "UnFollow"
                   : "Follow"}
               </Button>
             </Flex>

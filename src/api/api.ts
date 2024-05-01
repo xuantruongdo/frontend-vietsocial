@@ -179,6 +179,17 @@ export const callLeaveGroupChat = (id: string): Promise<IBackendRes<any>> => {
   return axios.patch(`/api/v1/chats/leave/${id}`);
 };
 
+export const callUpdateGroupChat = (
+  id: string,
+  data: any
+): Promise<IBackendRes<any>> => {
+  return axios.patch(`/api/v1/chats/${id}`, data);
+};
+
+export const callDeleteGroupChat = (id: string): Promise<IBackendRes<any>> => {
+  return axios.delete(`/api/v1/chats/${id}`);
+};
+
 //Message
 
 export const callFetchMessagesWithChat = (

@@ -22,7 +22,6 @@ const Confirmation = () => {
       confirmationCode,
     };
       const res = await callActive(data);
-      console.log(res);
     if (res && res.data) {
       message.success("Account authentication successful");
       navigate("/login");

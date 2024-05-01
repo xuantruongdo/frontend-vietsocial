@@ -71,6 +71,7 @@ const ChatList = (props: IProps) => {
     if (res && res.data) {
       setChatName("");
       message.success("Successfully created a chat group");
+      setIds([]);
       handleCancel();
       fetchChats();
     } else {
@@ -101,8 +102,13 @@ const ChatList = (props: IProps) => {
           placeholder="Please select"
           onChange={handleChange}
           options={options}
+          value={ids}
         />
-        <Button type="primary" loading={loading} onClick={handleCreateGroupChat}>
+        <Button
+          type="primary"
+          loading={loading}
+          onClick={handleCreateGroupChat}
+        >
           Create
         </Button>
       </Flex>
@@ -147,7 +153,9 @@ const ChatList = (props: IProps) => {
 
               <div>
                 <h4>
-                  {chat?.isGroupChat ? chat?.chatName : checkReceiver(chat?.users, currentUser?._id)?.fullname}
+                  {chat?.isGroupChat
+                    ? chat?.chatName
+                    : checkReceiver(chat?.users, currentUser?._id)?.fullname}
                 </h4>
                 <Flex gap={5}>
                   <p>{chat?.latestMessage?.sender.fullname}: </p>
